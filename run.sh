@@ -6,6 +6,7 @@ docker run -it --rm \
   -e XAUTHORITY=/home/kokos/.Xauthority \
   -v /tmp/.X11-unix:/tmp/.X11-unix \
   -v ~/.Xauthority:/home/kokos/.Xauthority \
+  -v ~/tmp:/home/kokos/Downloads \
   --user kokos \
   kos \
   bash -c 'java -version && javaws -verbose -wait https://ikos.cvut.cz/ikoshtml/jnlp/jnlp.php?serve=kos_cvut.jnlp'

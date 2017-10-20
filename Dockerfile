@@ -29,12 +29,18 @@ RUN \
   apt-get update && \
   apt-get install -y xorg xterm
 
+# Install Firefox
+RUN \
+  apt-get update && \
+  apt-get install -y firefox
+
 # Add user
 RUN useradd -ms /bin/bash kokos
 USER kokos
 
 # Define working directory.
 WORKDIR /home/kokos
+RUN mkdir -p /home/kokos/Downloads
 
 # Define commonly used JAVA_HOME variable
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle

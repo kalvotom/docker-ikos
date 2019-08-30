@@ -4,7 +4,7 @@
 
 ## Build
 
-Download the specific Java installation file suggested by VIC (currently `jdk-8u212-linux-x64.tar.gz`)
+Download the specific Java installation file suggested by VIC (currently `jre-8u212-linux-x64.tar.gz`)
 and place it into the directory with Dockerfile.
 Then build the image.
 

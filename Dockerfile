@@ -10,29 +10,25 @@
 #
 
 # Pull base image.
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 MAINTAINER tomas.kalvoda@fit.cvut.cz
 
 # Install Java.
+COPY jre-8u212-linux-x64.tar.gz ./
+
+RUN apt-get update
+
 RUN \
-  apt-get update && \
-  apt-get install -y software-properties-common && \
-  echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
-  add-apt-repository -y ppa:webupd8team/java && \
-  apt-get update && \
-  apt-get install -y oracle-java8-installer && \
-  rm -rf /var/lib/apt/lists/* && \
-  rm -rf /var/cache/oracle-jdk8-installer
+  mkdir -p /opt/jre && \
+  tar -xf jre-8u212-linux-x64.tar.gz -C /opt/jre && \
+  update-alternatives --install /usr/bin/java java /opt/jre/jre1.8.0_212/bin/java 100 && \
+  update-alternatives --install /usr/bin/javaws javaws /opt/jre/jre1.8.0_212/bin/javaws 100
 
 # Install X11.
-RUN \
-  apt-get update && \
-  apt-get install -y xorg xterm
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y xorg xterm
 
-# Install Firefox
-RUN \
-  apt-get update && \
-  apt-get install -y firefox
+# Install Firefox.
+RUN apt-get install -y firefox
 
 # Add user
 RUN useradd -ms /bin/bash kokos
@@ -43,7 +39,7 @@ WORKDIR /home/kokos
 RUN mkdir -p /home/kokos/Downloads
 
 # Define commonly used JAVA_HOME variable
-ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
+ENV JRE_HOME /opt/jre/jre1.8.0_212
 
 # Define default command.
 CMD ["bash"]
